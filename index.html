@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>咨询服务｜我有个项目，不知道怎么做？— 商业测评</title>
+<style>
+  :root{
+    --ink:#1f2329;
+    --ink-2:#4e5969;
+    --muted:#8a93a0;
+    --line:#e6e9ee;
+    --bg:#ffffff;
+    --bg-2:#f6f7f9;
+    --blue:#3d5a80;
+    --blue-2:#5b7a99;
+    --blue-soft:#eef2f7;
+    --radius:12px;
+    --shadow:0 2px 12px rgba(31,35,41,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:var(--bg-2);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:84px;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 18px;}
+  header.top{
+    background:var(--ink);
+    color:#fff;
+    padding:26px 0 22px;
+  }
+  header.top .wrap{padding:0 18px;}
+  .brand{font-size:13px;letter-spacing:2px;color:var(--blue-2);font-weight:600;}
+  .title{font-size:22px;font-weight:700;margin-top:6px;}
+  .sub{font-size:13px;color:#c4ccd6;margin-top:6px;}
+  .card{
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-top:18px;
+    padding:22px 20px;
+  }
+  /* progress */
+  .prog{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:14px;}
+  .prog .bar{flex:1;height:6px;background:var(--line);border-radius:6px;margin:0 12px;overflow:hidden;}
+  .prog .bar > i{display:block;height:100%;width:0;background:var(--blue);border-radius:6px;transition:width .25s ease;}
+  .qnum{font-weight:600;color:var(--ink-2);}
+  .question{font-size:17px;font-weight:600;color:var(--ink);margin:4px 0 18px;line-height:1.5;}
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:13px 14px;
+    cursor:pointer;
+    transition:all .15s ease;
+    background:#fff;
+  }
+  .opt:hover{border-color:var(--blue-2);background:var(--blue-soft);}
+  .opt .key{
+    flex:0 0 26px;height:26px;border-radius:50%;
+    border:1px solid var(--line);color:var(--ink-2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:600;
+  }
+  .opt .txt{font-size:14.5px;color:var(--ink-2);}
+  .opt.sel{border-color:var(--blue);background:var(--blue-soft);}
+  .opt.sel .key{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .opt.sel .txt{color:var(--ink);font-weight:500;}
+  .nav{display:flex;gap:12px;margin-top:20px;}
+  .btn{
+    flex:1;border:none;border-radius:10px;padding:13px 0;
+    font-size:15px;font-weight:600;cursor:pointer;transition:all .15s ease;
+    font-family:inherit;
+  }
+  .btn-prev{background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line);}
+  .btn-prev:hover{background:#eceef1;}
+  .btn-next{background:var(--blue);color:#fff;}
+  .btn-next:hover{background:#344e6e;}
+  .btn-next:disabled{background:#c2cad4;cursor:not-allowed;}
+  /* result */
+  .res-head{font-size:19px;font-weight:700;margin-bottom:4px;}
+  .res-tip{font-size:13px;color:var(--muted);margin-bottom:18px;}
+  .dims{display:flex;flex-direction:column;gap:14px;}
+  .dim{}
+  .dim .row{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:6px;}
+  .dim .name{font-weight:600;}
+  .dim .val{color:var(--blue);font-weight:700;font-size:15px;}
+  .dim .lv{font-size:12px;color:var(--muted);margin-left:6px;font-weight:400;}
+  .dim .track{height:9px;background:var(--line);border-radius:6px;overflow:hidden;}
+  .dim .track > i{display:block;height:100%;background:linear-gradient(90deg,var(--blue-2),var(--blue));border-radius:6px;width:0;transition:width .4s ease;}
+  .plans{display:flex;flex-direction:column;gap:12px;margin-top:22px;}
+  .plan{
+    border:1px solid var(--line);border-radius:12px;padding:16px 16px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    background:#fff;transition:all .15s ease;
+  }
+  .plan:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(61,90,128,.12);}
+  .plan .info .pname{font-size:15px;font-weight:700;}
+  .plan .info .pdesc{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .plan .buy{
+    flex:0 0 auto;background:var(--blue);color:#fff;border:none;
+    border-radius:9px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;
+  }
+  .plan .buy:hover{background:#344e6e;}
+  .plan .price{font-size:13px;color:var(--muted);}
+  .report{
+    margin-top:16px;border:1px solid var(--line);border-radius:12px;
+    background:var(--bg-2);padding:18px;display:none;
+  }
+  .report.show{display:block;}
+  .report h4{font-size:15px;margin-bottom:10px;color:var(--blue);}
+  .report .body{font-size:14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.85;}
+  .restart{margin-top:18px;text-align:center;}
+  .restart button{background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:9px;padding:9px 18px;font-size:13px;cursor:pointer;font-family:inherit;}
+  .restart button:hover{background:var(--bg-2);}
+  /* fixed bottom CTA */
+  .cta{
+    position:fixed;left:0;right:0;bottom:0;
+    background:var(--ink);border-top:1px solid #2c3138;
+    padding:14px 0;z-index:50;
+  }
+  .cta .wrap{padding:0 18px;display:flex;justify-content:center;}
+  .cta button{
+    width:100%;max-width:684px;background:var(--blue);color:#fff;border:none;
+    border-radius:10px;padding:14px 0;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+    letter-spacing:.5px;
+  }
+  .cta button:hover{background:#344e6e;}
+  /* modal */
+  .mask{position:fixed;inset:0;background:rgba(31,35,41,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+  .mask.show{display:flex;}
+  .modal{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.2);}
+  .modal h3{font-size:18px;margin-bottom:10px;}
+  .modal p{font-size:14px;color:var(--ink-2);margin-bottom:8px;}
+  .modal .wx{background:var(--blue-soft);border:1px dashed var(--blue-2);border-radius:10px;padding:12px;font-size:14px;color:var(--blue);font-weight:600;text-align:center;margin:12px 0;}
+  .modal .close{width:100%;background:var(--blue);color:#fff;border:none;border-radius:9px;padding:12px 0;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:6px;}
+  .payqr{display:flex;justify-content:center;margin:12px 0;}
+  .payph{width:180px;height:180px;border:1px dashed var(--blue-2);border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:var(--muted);padding:10px;line-height:1.6;}
+  .codebox{display:flex;gap:8px;margin-top:10px;}
+  .codebox input{flex:1;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none;}
+  .codebox input:focus{border-color:var(--blue);}
+  .foot-note{text-align:center;font-size:11px;color:var(--muted);margin-top:24px;padding-bottom:8px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">商业测评 · 咨询服务</div>
+    <div class="title">我有个项目，不知道怎么做？</div>
+    <div class="sub">15 道测评，自动生成你的五大维度诊断 · 前端本地计算，无需联网</div>
+  </div>
+</header>
+
+<!-- 答题区 -->
+<section id="quiz" class="wrap">
+  <div class="card">
+    <div class="prog">
+      <span class="qnum" id="qnum">第 1 / 15 题</span>
+      <span class="bar"><i id="progbar"></i></span>
+      <span id="qpct">7%</span>
+    </div>
+    <div class="question" id="question">题目加载中…</div>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="btn btn-prev" id="prevBtn" onclick="prev()">上一题</button>
+      <button class="btn btn-next" id="nextBtn" onclick="next()" disabled>下一题</button>
+    </div>
+  </div>
+  <div class="foot-note">本测评结果由前端算法即时计算，仅供商业方向参考。</div>
+</section>
+
+<!-- 结果区 -->
+<section id="result" class="wrap" style="display:none;">
+  <div class="card">
+    <div class="res-head">你的商业测评诊断</div>
+    <div class="res-tip">以下为五大维度得分（满分 100），基于你的 15 项选择实时计算。</div>
+    <div class="dims" id="dims"></div>
+
+    <div class="plans" id="plans">
+      <div class="plan">
+        <div class="info">
+          <div class="pname">👉 0.99 元 · 基础版</div>
+          <div class="pdesc">100 字简短卡点总结，快速定位核心问题</div>
+        </div>
+        <button class="buy" id="buy-basic" onclick="openPay('basic')">微信支付解锁</button>
+      </div>
+      <div class="plan">
+        <div class="info">
+          <div class="pname">👉 19.9 元 · 标准版</div>
+          <div class="pdesc">500 字分析 + 维度解读 + 简易落地步骤</div>
+        </div>
+        <button class="buy" id="buy-standard" onclick="openPay('standard')">微信支付解锁</button>
+      </div>
+      <div class="plan">
+        <div class="info">
+          <div class="pname">👉 99 元 · 深度报告版</div>
+          <div class="pdesc">1000 字完整诊断：复盘 / 卡点 / 适配 / 执行 / 规划 / 避坑 / 资源</div>
+        </div>
+        <button class="buy" id="buy-deep" onclick="openPay('deep')">微信支付解锁</button>
+      </div>
+    </div>
+
+    <div class="report" id="report">
+      <h4 id="reportTitle"></h4>
+      <div class="body" id="reportBody"></div>
+    </div>
+
+    <div class="restart">
+      <button onclick="restart()">重新测评</button>
+    </div>
+  </div>
+  <div class="foot-note">无论选择哪个版本，落地执行与一对一陪跑均可点击下方按钮联系。</div>
+</section>
+
+<!-- 固定底部 CTA -->
+<div class="cta">
+  <div class="wrap">
+    <button onclick="openContact()">👉 需要一对一商业诊断｜项目陪跑｜定制方案，点击联系咨询</button>
+  </div>
+</div>
+
+<!-- 联系弹窗 -->
+<div class="mask" id="mask">
+  <div class="modal">
+    <h3>联系商业顾问</h3>
+    <p>一对一商业诊断 · 项目陪跑 · 定制方案，按需沟通。</p>
+    <div class="wx" id="wxText">微信：your-wechat-id</div>
+    <p style="font-size:12px;color:var(--muted);" id="wxNote"></p>
+    <button class="close" onclick="closeContact()">关闭</button>
+  </div>
+</div>
+
+<!-- 付费解锁弹窗 -->
+<div class="mask" id="payMask">
+  <div class="modal">
+    <h3 id="payTitle">微信支付解锁</h3>
+    <div class="payqr">
+      <img id="payQrImg" alt="收款二维码" style="display:none;width:180px;height:180px;border-radius:8px;">
+      <div id="payQrPh" class="payph">请在此处放你的收款二维码<br>（设置 CONTACT_QR 为图片地址）</div>
+    </div>
+    <p id="payTip" style="font-size:13px;color:var(--ink-2);"></p>
+    <div class="codebox">
+      <input id="codeInput" placeholder="已付款？输入解锁码" autocomplete="off">
+      <button class="close" style="margin-top:0;width:auto;padding:10px 16px;" onclick="verifyCode()">验证</button>
+    </div>
+    <p id="codeMsg" style="font-size:12px;color:#c0392b;min-height:16px;margin:6px 0 0;"></p>
+    <button class="close" onclick="payReveal()">我已支付，查看报告</button>
+    <button class="close" style="background:var(--bg-2);color:var(--ink-2);margin-top:8px;" onclick="closePay()">稍后支付</button>
+  </div>
+</div>
+
+<script>
+/* ============ 题目数据 ============ */
+const QUESTIONS = [
+  {id:1, q:"你当前的商业状态属于哪一种？", opts:[
+    {k:'A', t:"无项目，准备初次创业（开店/做品牌/做副业）"},
+    {k:'B', t:"已有门店/项目，运营 1 年以内"},
+    {k:'C', t:"已有成熟项目，想拓店/拓品类/做升级"},
+    {k:'D', t:"传统行业，想转型新商业、新赛道"},
+    {k:'E', t:"有铺面/资源，暂无具体落地项目"}
+  ]},
+  {id:2, q:"你目前最大的困惑核心是？", opts:[
+    {k:'A', t:"不知道选什么赛道、不知道能不能做"},
+    {k:'B', t:"项目想做，但不会策划、不会落地"},
+    {k:'C', t:"门店业绩差、没有流量、不会运营"},
+    {k:'D', t:"缺供应链、设计、搭建、渠道等资源"},
+    {k:'E', t:"中年转型迷茫，不知道职业/商业方向"},
+    {k:'F', t:"有想法，但不会执行、怕踩坑"}
+  ]},
+  {id:3, q:"你当下想解决的核心问题是单一问题，还是整体规划问题？", opts:[
+    {k:'A', t:"单一小问题（资源咨询、工具咨询、基础疑问）"},
+    {k:'B', t:"项目可行性判断（能不能做、值不值得做）"},
+    {k:'C', t:"整体商业规划（定位、模式、落地路径）"},
+    {k:'D', t:"现有项目优化升级"},
+    {k:'E', t:"全案搭建（品牌、门店、活动、运营全套）"}
+  ]},
+  {id:4, q:"你目前手上已有的核心资源是什么？", opts:[
+    {k:'A', t:"只有资金，无资源无经验"},
+    {k:'B', t:"有铺面/场地，无落地思路"},
+    {k:'C', t:"有行业经验，缺策划和资源"},
+    {k:'D', t:"有团队/渠道，缺商业模式和打法"},
+    {k:'E', t:"资源齐全，只缺落地执行方案"}
+  ]},
+  {id:5, q:"你想通过本次测评，最终拿到什么结果？", opts:[
+    {k:'A', t:"明确自己适不适合创业/做这个项目"},
+    {k:'B', t:"找到当前商业卡点的核心原因"},
+    {k:'C', t:"拿到简单可落地的第一步操作方法"},
+    {k:'D', t:"获取行业资源、渠道、供应链对接方向"},
+    {k:'E', t:"需要完整的定制化商业方案和陪跑"}
+  ]},
+  {id:6, q:"你目前的项目/想法，筹备多久了？", opts:[
+    {k:'A', t:"刚刚萌生想法"},
+    {k:'B', t:"筹备 1-3 个月，无进展"},
+    {k:'C', t:"筹备半年以上，迟迟不敢落地"},
+    {k:'D', t:"已经落地，效果不佳"},
+    {k:'E', t:"稳定运营，想放大规模"}
+  ]},
+  {id:7, q:"你在创业/开店过程中，最担心踩的坑是？", opts:[
+    {k:'A', t:"选错赛道、投入亏损"},
+    {k:'B', t:"装修/选址/供应链被坑"},
+    {k:'C', t:"不会做活动、没有客流"},
+    {k:'D', t:"模式不对、盈利困难"},
+    {k:'E', t:"不会管理、团队松散"}
+  ]},
+  {id:8, q:"你目前可以独立完成的事情是？", opts:[
+    {k:'A', t:"只有资金投入"},
+    {k:'B', t:"可以对接基础资源"},
+    {k:'C', t:"能做基础运营和执行"},
+    {k:'D', t:"懂行业，缺顶层策划"},
+    {k:'E', t:"执行力强，只缺方案"}
+  ]},
+  {id:9, q:"你目前无法独立解决、需要外部协助的问题是？", opts:[
+    {k:'A', t:"赛道选择、可行性分析"},
+    {k:'B', t:"品牌/门店整体策划定位"},
+    {k:'C', t:"活动策划、流量获客"},
+    {k:'D', t:"供应链、设计、搭建资源对接"},
+    {k:'E', t:"落地执行、流程管理、避坑指导"}
+  ]},
+  {id:10, q:"你计划多久之内落地/优化自己的商业项目？", opts:[
+    {k:'A', t:"1 个月内紧急落地"},
+    {k:'B', t:"3 个月内规划落地"},
+    {k:'C', t:"半年内观望筹备"},
+    {k:'D', t:"长期迷茫，无明确时间"},
+    {k:'E', t:"已运营，随时优化调整"}
+  ]},
+  {id:11, q:"你更需要的是「资源对接」还是「方案指导」还是「全程陪跑」？", opts:[
+    {k:'A', t:"只需要资源（设计/搭建/供应链/渠道）"},
+    {k:'B', t:"只需要方案策划和落地步骤"},
+    {k:'C', t:"需要问题诊断+优化建议"},
+    {k:'D', t:"需要全程一对一陪跑落地"},
+    {k:'E', t:"全维度需求（资源+方案+执行）"}
+  ]},
+  {id:12, q:"你过往是否有创业、开店、做生意的经验？", opts:[
+    {k:'A', t:"零基础纯小白"},
+    {k:'B', t:"有副业经验，无门店经验"},
+    {k:'C', t:"有单一行业经验，不会全盘策划"},
+    {k:'D', t:"多年商业经验，想跨界升级"},
+    {k:'E', t:"企业从业者/创业者，想优化体系"}
+  ]},
+  {id:13, q:"你当下的商业最大短板是？", opts:[
+    {k:'A', t:"认知不足，看不懂行业趋势"},
+    {k:'B', t:"不会策划，没有商业模式"},
+    {k:'C', t:"缺优质资源和渠道"},
+    {k:'D', t:"不会落地执行、不懂流程"},
+    {k:'E', t:"不会避坑、风险把控不足"}
+  ]},
+  {id:14, q:"如果问题解决，你最想达成的商业结果是？", opts:[
+    {k:'A', t:"规避风险，不踩坑不亏钱"},
+    {k:'B', t:"明确方向，不再迷茫内耗"},
+    {k:'C', t:"快速落地，实现盈利"},
+    {k:'D', t:"放大现有项目营收"},
+    {k:'E', t:"搭建长期可复制的商业体系"}
+  ]},
+  {id:15, q:"是否愿意针对性付费获取定制化解决方案？", opts:[
+    {k:'A', t:"只需要免费基础参考"},
+    {k:'B', t:"接受低价报告自助参考"},
+    {k:'C', t:"愿意付费深度诊断"},
+    {k:'D', t:"需要一对一专属陪跑落地"}
+  ]}
+];
+
+/* ============ 维度评分矩阵（0-5，仅相关维度赋值）============ */
+const DIMS = ['cog','res','exe','pain','need'];
+const DIM_NAME = {cog:'创业认知', res:'资源储备', exe:'落地能力', pain:'卡点问题', need:'需求匹配'};
+
+const SCORE = {
+  1:{ A:{cog:1,res:1,exe:1,pain:3,need:4}, B:{cog:3,res:3,exe:3,pain:3,need:3}, C:{cog:4,res:4,exe:4,pain:1,need:2}, D:{cog:3,res:2,exe:2,pain:3,need:3}, E:{cog:1,res:3,exe:1,pain:3,need:3} },
+  2:{ A:{cog:2,pain:4,need:4,res:1}, B:{exe:1,pain:4,need:4,cog:2}, C:{exe:1,pain:4,res:2,need:3}, D:{res:1,pain:4,need:4}, E:{cog:1,pain:4,need:4}, F:{exe:1,pain:4,need:4} },
+  3:{ A:{need:2,pain:2,exe:4}, B:{cog:2,pain:3,need:3}, C:{cog:3,need:4,pain:2}, D:{exe:3,need:3,cog:3}, E:{exe:2,need:5,pain:2} },
+  4:{ A:{res:1,cog:1}, B:{res:3,exe:1}, C:{res:3,cog:3,exe:2}, D:{res:4,exe:3,cog:2}, E:{res:5,exe:2} },
+  5:{ A:{cog:2,need:3}, B:{pain:2,need:3,cog:2}, C:{exe:2,need:3}, D:{res:1,need:3}, E:{need:5,exe:1} },
+  6:{ A:{exe:1,cog:1,pain:3}, B:{exe:1,pain:3,need:2}, C:{exe:1,pain:4,need:2}, D:{exe:2,pain:3,res:2}, E:{exe:4,res:3,cog:3} },
+  7:{ A:{cog:2,pain:3,need:2}, B:{res:1,pain:3}, C:{exe:1,pain:3,need:2}, D:{cog:2,pain:3,exe:1}, E:{exe:1,pain:3,need:2} },
+  8:{ A:{exe:1,res:1}, B:{res:3,exe:2}, C:{exe:3,res:2}, D:{cog:3,exe:2}, E:{exe:4,cog:2} },
+  9:{ A:{cog:1,pain:3,need:3}, B:{exe:1,pain:3,need:3}, C:{exe:1,pain:3,need:3}, D:{res:1,pain:3,need:3}, E:{exe:1,pain:3,need:3} },
+  10:{ A:{exe:2,need:4,pain:2}, B:{exe:2,need:3}, C:{exe:1,need:2,pain:2}, D:{exe:1,need:2,pain:3}, E:{exe:4,res:3} },
+  11:{ A:{res:1,need:2,exe:2}, B:{exe:1,need:3,cog:2}, C:{cog:2,need:3,pain:2}, D:{exe:1,need:5,pain:2}, E:{res:1,exe:1,need:5,pain:2} },
+  12:{ A:{cog:1,res:1,exe:1}, B:{cog:2,res:2,exe:2}, C:{cog:3,res:3,exe:2}, D:{cog:4,res:3,exe:3}, E:{cog:4,res:4,exe:4} },
+  13:{ A:{cog:1,need:2,pain:2}, B:{cog:2,exe:1,pain:3,need:2}, C:{res:1,pain:3,need:2}, D:{exe:1,pain:3,need:2}, E:{exe:1,pain:3,need:2} },
+  14:{ A:{pain:1,need:2,cog:2}, B:{cog:2,need:2,pain:1}, C:{exe:2,need:2}, D:{exe:3,res:2,need:2}, E:{exe:3,cog:3,need:2} },
+  15:{ A:{need:1}, B:{need:2}, C:{need:4}, D:{need:5} }
+};
+
+/* 用于基础版简短总结的精简标签（避免长选项文本超字数） */
+const SHORT = {
+  1:{A:'准备初次创业',B:'新店运营中',C:'成熟项目升级',D:'传统行业转型',E:'有铺面待项目'},
+  2:{A:'选赛道迷茫',B:'不会策划落地',C:'缺流量运营',D:'缺资源渠道',E:'转型方向迷茫',F:'有想法难执行'}
+};
+
+/* ============ 业务配置（请替换为你的真实信息）============ */
+/* 联系方式：微信/电话，用于底部 CTA 弹窗 */
+const CONTACT = {
+  wechat: 'your-wechat-id',            // ← 改成你的微信号
+  phone: '',                          // ← 可选，填电话
+  note: '微信搜一搜或扫码添加，备注「商业诊断」' // ← 自定义话术
+};
+/* 收款二维码图片地址：填你的微信/支付宝收款码图片 URL 或同目录文件名，如 'pay.png' */
+const CONTACT_QR = '';                // ← 改成你的收款码图片地址
+/* 付费档位价格 */
+const PRICE = { basic:'0.99', standard:'19.9', deep:'99' };
+/* 解锁码：付费后你可手动发给客户，输入即解锁对应档位（可随时更换）*/
+const UNLOCK = {
+  basic:   ['BASIC01','BASIC02'],
+  standard:['STD01','STD02'],
+  deep:    ['DEEP01','DEEP02']
+};
+
+/* ============ 状态 ============ */
+let cur = 0;
+const answers = {}; // {qid: letter}
+
+function optOf(qid, letter){
+  const q = QUESTIONS.find(x=>x.id===qid);
+  return q.opts.find(o=>o.k===letter);
+}
+function ansText(qid){ const o = optOf(qid, answers[qid]); return o ? o.t : ''; }
+
+/* ============ 渲染题目 ============ */
+function render(){
+  const q = QUESTIONS[cur];
+  document.getElementById('qnum').textContent = `第 ${cur+1} / ${QUESTIONS.length} 题`;
+  const pct = Math.round((cur+1)/QUESTIONS.length*100);
+  document.getElementById('progbar').style.width = pct + '%';
+  document.getElementById('qpct').textContent = pct + '%';
+  document.getElementById('question').textContent = q.q;
+
+  const box = document.getElementById('opts');
+  box.innerHTML = '';
+  q.opts.forEach(o=>{
+    const div = document.createElement('div');
+    div.className = 'opt' + (answers[q.id]===o.k ? ' sel' : '');
+    div.onclick = ()=>select(q.id, o.k);
+    div.innerHTML = `<div class="key">${o.k}</div><div class="txt">${o.t}</div>`;
+    box.appendChild(div);
+  });
+
+  document.getElementById('prevBtn').style.visibility = cur===0 ? 'hidden' : 'visible';
+  document.getElementById('nextBtn').textContent = cur===QUESTIONS.length-1 ? '查看结果' : '下一题';
+  document.getElementById('nextBtn').disabled = !answers[q.id];
+}
+
+function select(qid, letter){
+  answers[qid] = letter;
+  render();
+}
+
+function prev(){
+  if(cur>0){ cur--; render(); }
+}
+function next(){
+  const q = QUESTIONS[cur];
+  if(!answers[q.id]) return;
+  if(cur < QUESTIONS.length-1){ cur++; render(); }
+  else { finish(); }
+}
+
+/* ============ 计算分数 ============ */
+function computeScores(){
+  const sums={cog:0,res:0,exe:0,pain:0,need:0};
+  const maxs={cog:0,res:0,exe:0,pain:0,need:0};
+  for(const q of QUESTIONS){
+    const pts = SCORE[q.id][answers[q.id]];
+    if(!pts) continue;
+    for(const d of DIMS){
+      if(pts[d]!==undefined){ sums[d]+=pts[d]; maxs[d]+=5; }
+    }
+  }
+  const res={};
+  for(const d of DIMS){ res[d] = maxs[d] ? Math.round(sums[d]/maxs[d]*100) : 0; }
+  return res;
+}
+
+function lvl(v, dim){
+  if(dim==='pain'){ if(v>=70) return '突出'; if(v>=40) return '一般'; return '较少'; }
+  if(v>=70) return '强'; if(v>=40) return '中'; return '弱';
+}
+
+/* ============ 生成报告 ============ */
+function buildReports(s){
+  const cog=s.cog, res=s.res, exe=s.exe, pain=s.pain, need=s.need;
+  const cogL=lvl(cog,'cog'), resL=lvl(res,'res'), exeL=lvl(exe,'exe'), painL=lvl(pain,'pain'), needL=lvl(need,'need');
+
+  // 最弱能力维度
+  const cap = [['cog','创业认知',cog],['res','资源储备',res],['exe','落地能力',exe]];
+  cap.sort((a,b)=>a[2]-b[2]);
+  const weakName = cap[0][1];
+  const weakScore = cap[0][2];
+
+  const statusText = ansText(1);
+  const confuseText = ansText(2);
+  const resourceText = ansText(4);
+  const goalText = ansText(14);
+  const shortText = ansText(13);
+  const prepText = ansText(6);
+  const expText = ansText(12);
+  const worryText = ansText(7);
+  const statusShort = SHORT[1][answers[1]];
+  const confuseShort = SHORT[2][answers[2]];
+
+  // ① 基础版（≤100字）
+  const basic =
+`核心卡点：${weakName}偏弱（${weakScore}分），卡点问题${painL}。你处于「${statusShort}」，困惑是「${confuseShort}」。建议先锁定最小落地动作、停止内耗，再补方案与资源。`;
+
+  // ② 标准版（约500字）
+  const standard =
+`【维度快览】
+创业认知 ${cog} 分（${cogL}）｜资源储备 ${res} 分（${resL}）｜落地能力 ${exe} 分（${exeL}）｜卡点问题 ${pain} 分（${painL}）｜需求匹配 ${need} 分（${needL}）
+
+【核心问题】
+你当前处于「${statusText}」阶段，最大困惑是「${confuseText}」，自述最大短板是「${shortText}」。本质卡点在于 ${weakName} 偏弱——方向与意愿清晰，但把方向拆成可执行步骤、并补齐短板资源的能力尚未跑通，因此容易陷入"想得多、动得少"的内耗。
+
+【简易落地三步】
+1) 最小验证：选一个单点（一家店的爆品 / 一个账号的一条转化路径），小成本先测真实需求，不急着大投入；
+2) 目标拆解：以「${goalText}」倒推，把目标拆成未来 4 周的每周动作，每周只盯一个核心指标；
+3) 优先补短：集中补最弱的 ${weakName}，用现成模板或一次轻量咨询替代从零自学，降低试错成本。
+
+【适配提示】
+南宁本地生活与夜经济活跃，建议优先选"轻启动、强内容"的方向，避免重资产先行；方向验证后再逐步加码资源与陪跑。`;
+
+  // ③ 深度报告版（约1000字）
+  const deep =
+`【一、现状复盘】
+你当前处于「${statusText}」阶段，商业筹备时长「${prepText}」，过往经验画像为「${expText}」。测评得分显示：创业认知 ${cogL}（${cog}分）、资源储备 ${resL}（${res}分）、落地能力 ${exeL}（${exe}分）。整体属于"有意愿、有方向感，但可执行闭环尚未跑通"的典型早期创业者状态，关键不在想法，而在把想法变成动作的链路。
+
+【二、卡点深挖】
+本测评分显示卡点问题${painL}（${pain}分）。你自述最大困惑是「${confuseText}」，最大短板是「${shortText}」。核心矛盾集中在认知与资源/执行之间的断层——能看清大方向，却缺把方向拆成可操作步骤的能力，也缺能补齐短板的外部资源，于是长期停在筹备期。
+
+【三、行业适配】
+对照一线与新一线城市创业规律，你的状态在实体店、个人品牌、轻资产副业中均属常见。南宁作为东盟门户、夜经济活跃城市，本地生活、文旅周边、东盟好物分销等赛道对"轻启动+强内容"型创业者较友好。你的需求匹配度${needL}（${need}分），说明引入外部专业支持能显著缩短试错周期、降低踩坑概率。
+
+【四、短期执行（30-90天）】
+1) 锁定一个最小可行项目，先小成本跑通单点（如一家店的一个爆品、一个账号的一条转化路径）；
+2) 用「${goalText}」倒推目标，拆成每周动作清单，每周只盯一个指标；
+3) 优先补齐最弱维度（${weakName}），用模板/工具/外部咨询替代从零自学。
+
+【五、长期规划（6-12个月）】
+当单点模型验证盈利后，再考虑拓店/拓品类/做体系。对照你期望的「${goalText}」，提前搭建可复制的 SOP 与供应链，避免规模放大时管理失控。
+
+【六、避坑要点】
+你最担心的「${worryText}」是真实高发风险。重点防三类坑：①重装修轻验证，先投大钱再想客流；②模式没跑通就加盟/铺货；③合伙与分工无书面约定。每一笔投入前先做"最坏情况测算"。
+
+【七、资源方向】
+你已有资源画像「${resourceText}」。建议按"先方案、后资源、再陪跑"的顺序补：先用标准/深度诊断拿到落地方案，再针对性对接设计、搭建、供应链、渠道；需要执行落地时再上一对一陪跑，匹配你的付费取向即可。
+
+【附：下一步建议】
+以上为通用诊断框架。若需把方向真正变成动作，建议从最小验证开始（本周即可启动），遇到卡点再按"方案→资源→陪跑"的层级逐步引入外部支持，避免在未验证前做重投入。`;
+
+  return {basic, standard, deep};
+}
+
+/* ============ 结果显示 ============ */
+function finish(){
+  const s = computeScores();
+  const box = document.getElementById('dims');
+  box.innerHTML = '';
+  DIMS.forEach(d=>{
+    const v = s[d];
+    const lv = lvl(v, d);
+    const row = document.createElement('div');
+    row.className = 'dim';
+    row.innerHTML =
+      `<div class="row"><span class="name">${DIM_NAME[d]}<span class="lv">${lv}</span></span><span class="val">${v}</span></div>
+       <div class="track"><i style="width:${v}%"></i></div>`;
+    box.appendChild(row);
+  });
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('report').classList.remove('show');
+  window.scrollTo(0,0);
+}
+
+let lastReports = null;
+function showReport(type){
+  if(!lastReports){
+    lastReports = buildReports(computeScores());
+  }
+  const r = lastReports[type];
+  const titles = {basic:'0.99 元 · 基础版（简短卡点总结）', standard:'19.9 元 · 标准版（维度解读+落地步骤）', deep:'99 元 · 深度报告版（完整诊断报告）'};
+  document.getElementById('reportTitle').textContent = titles[type];
+  document.getElementById('reportBody').textContent = r;
+  const el = document.getElementById('report');
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function restart(){
+  for(const k in answers) delete answers[k];
+  cur = 0;
+  lastReports = null;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  render();
+  window.scrollTo(0,0);
+}
+
+/* ============ 联系弹窗 ============ */
+function openContact(){
+  document.getElementById('wxText').textContent = '微信：' + (CONTACT.wechat || '（未设置）') + (CONTACT.phone ? '　电话：' + CONTACT.phone : '');
+  document.getElementById('wxNote').textContent = CONTACT.note || '';
+  document.getElementById('mask').classList.add('show');
+}
+function closeContact(){ document.getElementById('mask').classList.remove('show'); }
+document.getElementById('mask').addEventListener('click', function(e){ if(e.target===this) closeContact(); });
+
+/* ============ 付费解锁 ============ */
+const unlocked = {};
+let curTier = null;
+function tierName(t){ return t==='basic' ? '基础版' : t==='standard' ? '标准版' : '深度报告版'; }
+
+function openPay(tier){
+  curTier = tier;
+  if(unlocked[tier]){ showReport(tier); return; }
+  document.getElementById('payTitle').textContent = '¥' + PRICE[tier] + ' · 解锁' + tierName(tier);
+  document.getElementById('payTip').textContent = '请扫码支付 ¥' + PRICE[tier] + '，支付后点击「我已支付，查看报告」；如已通过其他方式付款，请输入顾问给的解锁码。';
+  const img = document.getElementById('payQrImg');
+  const ph = document.getElementById('payQrPh');
+  if(CONTACT_QR){
+    img.src = CONTACT_QR; img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
+  }
+  document.getElementById('codeInput').value = '';
+  document.getElementById('codeMsg').textContent = '';
+  document.getElementById('payMask').classList.add('show');
+}
+function closePay(){ document.getElementById('payMask').classList.remove('show'); }
+function markUnlocked(t){
+  const b = document.getElementById('buy-' + t);
+  if(b) b.textContent = '查看报告';
+}
+function payReveal(){
+  if(!curTier) return;
+  unlocked[curTier] = true;
+  document.getElementById('payMask').classList.remove('show');
+  showReport(curTier);
+  markUnlocked(curTier);
+}
+function verifyCode(){
+  const v = (document.getElementById('codeInput').value || '').trim().toUpperCase();
+  if(!v){ document.getElementById('codeMsg').textContent = '请输入解锁码'; return; }
+  const valid = (UNLOCK[curTier] || []).map(x => x.toUpperCase());
+  if(valid.includes(v)){
+    unlocked[curTier] = true;
+    document.getElementById('payMask').classList.remove('show');
+    showReport(curTier);
+    markUnlocked(curTier);
+  } else {
+    document.getElementById('codeMsg').textContent = '解锁码无效，请核对或联系顾问';
+  }
+}
+document.getElementById('payMask').addEventListener('click', function(e){ if(e.target===this) closePay(); });
+
+/* ============ 初始化 ============ */
+render();
+</script>
+</body>
+</html>
