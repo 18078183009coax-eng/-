@@ -6,17 +6,18 @@
 <title>咨询服务｜我有个项目，不知道怎么做？— 商业测评</title>
 <style>
   :root{
-    --ink:#1f2329;
-    --ink-2:#4e5969;
-    --muted:#8a93a0;
-    --line:#e6e9ee;
+    --ink:#27313d;
+    --ink-2:#5a6675;
+    --muted:#9aa3b0;
+    --line:#e6ebf2;
     --bg:#ffffff;
-    --bg-2:#f6f7f9;
-    --blue:#3d5a80;
-    --blue-2:#5b7a99;
-    --blue-soft:#eef2f7;
+    --bg-2:#f5f8fc;
+    --blue:#2f7de0;
+    --blue-2:#5b9bf0;
+    --blue-soft:#eaf2fe;
+    --blue-deep:#1f6fd0;
     --radius:12px;
-    --shadow:0 2px 12px rgba(31,35,41,.06);
+    --shadow:0 2px 12px rgba(47,125,224,.08);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
@@ -26,18 +27,19 @@
     background:var(--bg-2);
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
-    padding-bottom:84px;
+    padding-bottom:72px;
   }
   .wrap{max-width:720px;margin:0 auto;padding:0 18px;}
   header.top{
-    background:var(--ink);
-    color:#fff;
+    background:linear-gradient(135deg,#eaf2ff 0%,#f7faff 100%);
+    color:#1f2a3a;
     padding:26px 0 22px;
+    border-bottom:1px solid var(--line);
   }
   header.top .wrap{padding:0 18px;}
-  .brand{font-size:13px;letter-spacing:2px;color:var(--blue-2);font-weight:600;}
-  .title{font-size:22px;font-weight:700;margin-top:6px;}
-  .sub{font-size:13px;color:#c4ccd6;margin-top:6px;}
+  .brand{font-size:13px;letter-spacing:2px;color:var(--blue);font-weight:600;}
+  .title{font-size:22px;font-weight:700;margin-top:6px;color:#1a3a64;}
+  .sub{font-size:13px;color:var(--ink-2);margin-top:6px;}
   .card{
     background:var(--bg);
     border:1px solid var(--line);
@@ -82,10 +84,12 @@
   .btn-prev{background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line);}
   .btn-prev:hover{background:#eceef1;}
   .btn-next{background:var(--blue);color:#fff;}
-  .btn-next:hover{background:#344e6e;}
+  .btn-next:hover{background:var(--blue-deep);}
   .btn-next:disabled{background:#c2cad4;cursor:not-allowed;}
   /* result */
   .res-head{font-size:19px;font-weight:700;margin-bottom:4px;}
+  .intro-body{font-size:14px;color:var(--ink-2);line-height:1.9;margin-bottom:18px;}
+  .intro-q{font-size:15px;font-weight:600;margin:6px 0 12px;}
   .res-tip{font-size:13px;color:var(--muted);margin-bottom:18px;}
   .dims{display:flex;flex-direction:column;gap:14px;}
   .dim{}
@@ -101,14 +105,14 @@
     display:flex;align-items:center;justify-content:space-between;gap:14px;
     background:#fff;transition:all .15s ease;
   }
-  .plan:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(61,90,128,.12);}
+  .plan:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(47,125,224,.14);}
   .plan .info .pname{font-size:15px;font-weight:700;}
   .plan .info .pdesc{font-size:12.5px;color:var(--muted);margin-top:3px;}
   .plan .buy{
     flex:0 0 auto;background:var(--blue);color:#fff;border:none;
     border-radius:9px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;
   }
-  .plan .buy:hover{background:#344e6e;}
+  .plan .buy:hover{background:var(--blue-deep);}
   .plan .price{font-size:13px;color:var(--muted);}
   .report{
     margin-top:16px;border:1px solid var(--line);border-radius:12px;
@@ -123,16 +127,17 @@
   /* fixed bottom CTA */
   .cta{
     position:fixed;left:0;right:0;bottom:0;
-    background:var(--ink);border-top:1px solid #2c3138;
-    padding:14px 0;z-index:50;
+    background:#ffffff;border-top:1px solid var(--line);
+    box-shadow:0 -2px 12px rgba(47,125,224,.10);
+    padding:9px 0;z-index:50;
   }
   .cta .wrap{padding:0 18px;display:flex;justify-content:center;}
   .cta button{
     width:100%;max-width:684px;background:var(--blue);color:#fff;border:none;
-    border-radius:10px;padding:14px 0;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
-    letter-spacing:.5px;
+    border-radius:10px;padding:11px 0;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;
+    letter-spacing:.3px;
   }
-  .cta button:hover{background:#344e6e;}
+  .cta button:hover{background:var(--blue-deep);}
   /* modal */
   .mask{position:fixed;inset:0;background:rgba(31,35,41,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
   .mask.show{display:flex;}
@@ -154,13 +159,28 @@
 <header class="top">
   <div class="wrap">
     <div class="brand">商业测评 · 咨询服务</div>
-    <div class="title">我有个项目，不知道怎么做？</div>
-    <div class="sub">15 道测评，自动生成你的五大维度诊断 · 前端本地计算，无需联网</div>
+    <div class="title">诊断测试｜我有个项目，不知道怎么做？</div>
+    <div class="sub">15道测试了解你的需求，重要的不是马上选择，是冷静测试一下，找到合适的方法解决问题清楚方向</div>
   </div>
 </header>
 
+<!-- 开场页 -->
+<section id="intro" class="wrap">
+  <div class="card">
+    <div class="res-head">感谢你的认可</div>
+    <div class="intro-body">感谢你的认可，近期项目繁忙，很抱歉不能及时回复。为了节省时间，我做了一个前端诊断沟通小内容。为了更好的了解您急需的帮助，可能需要您花点时间做个需求沟通。这个测试题安全可适用，是我的智能体助理制作的，感谢你的理解。</div>
+    <div class="intro-q">你找我需要了解的是：</div>
+    <div class="opts">
+      <div class="opt" onclick="startQuiz()"><div class="key">A</div><div class="txt">找我分析问题</div></div>
+      <div class="opt" onclick="startQuiz()"><div class="key">B</div><div class="txt">找我解惑</div></div>
+      <div class="opt" onclick="startQuiz()"><div class="key">C</div><div class="txt">找我解决实际问题</div></div>
+    </div>
+  </div>
+  <div class="foot-note">本页为纯前端内容，答题在本地完成，无需联网。</div>
+</section>
+
 <!-- 答题区 -->
-<section id="quiz" class="wrap">
+<section id="quiz" class="wrap" style="display:none;">
   <div class="card">
     <div class="prog">
       <span class="qnum" id="qnum">第 1 / 15 题</span>
@@ -244,7 +264,7 @@
     <h3 id="payTitle">微信支付解锁</h3>
     <div class="payqr">
       <img id="payQrImg" alt="收款二维码" style="display:none;width:180px;height:180px;border-radius:8px;">
-      <div id="payQrPh" class="payph">请在此处放你的收款二维码<br>（设置 CONTACT_QR 为图片地址）</div>
+      <div id="payQrPh" class="payph">请在此处放你的微信收款二维码<br>（设置 CONTACT_QR 为图片地址）</div>
     </div>
     <p id="payTip" style="font-size:13px;color:var(--ink-2);"></p>
     <div class="codebox">
@@ -252,7 +272,7 @@
       <button class="close" style="margin-top:0;width:auto;padding:10px 16px;" onclick="verifyCode()">验证</button>
     </div>
     <p id="codeMsg" style="font-size:12px;color:#c0392b;min-height:16px;margin:6px 0 0;"></p>
-    <button class="close" onclick="payReveal()">我已支付，查看报告</button>
+    <button class="close" onclick="payReveal()">我已微信支付，查看报告</button>
     <button class="close" style="background:var(--bg-2);color:var(--ink-2);margin-top:8px;" onclick="closePay()">稍后支付</button>
   </div>
 </div>
@@ -398,7 +418,7 @@ const SHORT = {
 /* ============ 业务配置（请替换为你的真实信息）============ */
 /* 联系方式：微信/电话，用于底部 CTA 弹窗 */
 const CONTACT = {
-  wechat: 'your-wechat-id',            // ← 改成你的微信号
+  wechat: 'Lulu505F',                  // ← 微信号
   phone: '',                          // ← 可选，填电话
   note: '微信搜一搜或扫码添加，备注「商业诊断」' // ← 自定义话术
 };
@@ -620,7 +640,7 @@ function openPay(tier){
   curTier = tier;
   if(unlocked[tier]){ showReport(tier); return; }
   document.getElementById('payTitle').textContent = '¥' + PRICE[tier] + ' · 解锁' + tierName(tier);
-  document.getElementById('payTip').textContent = '请扫码支付 ¥' + PRICE[tier] + '，支付后点击「我已支付，查看报告」；如已通过其他方式付款，请输入顾问给的解锁码。';
+  document.getElementById('payTip').textContent = '请使用微信扫描下方收款码支付 ¥' + PRICE[tier] + '，支付后点击「我已微信支付，查看报告」；如已通过其他方式付款，请输入顾问给的解锁码。';
   const img = document.getElementById('payQrImg');
   const ph = document.getElementById('payQrPh');
   if(CONTACT_QR){
@@ -658,6 +678,13 @@ function verifyCode(){
   }
 }
 document.getElementById('payMask').addEventListener('click', function(e){ if(e.target===this) closePay(); });
+
+/* ============ 开场页 ============ */
+function startQuiz(){
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  window.scrollTo(0,0);
+}
 
 /* ============ 初始化 ============ */
 render();
